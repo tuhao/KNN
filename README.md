@@ -1,4 +1,6 @@
-KNN
-===
+###算法###
+K Nearest Neighbor算法又叫KNN算法，这个算法是机器学习里面一个比较经典的算法。
 
-KNN algorithm implemented by Java
+###使用###
+
+
