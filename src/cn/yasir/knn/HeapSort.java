@@ -1,6 +1,6 @@
 package cn.yasir.knn;
 
-import cn.yasir.knn.KnnModel.KNN;
+import cn.yasir.knn.bean.KNN;
 
 
 public class HeapSort {

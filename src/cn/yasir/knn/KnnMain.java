@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.yasir.knn.data.Message;
+import cn.yasir.knn.bean.Message;
 import cn.yasir.util.ReadAll;
 import cn.yasir.util.ReadByLine;
 
@@ -34,7 +34,7 @@ public class KnnMain {
 	private static void knn() {
 		List<Message> inputMsgs = readDirFiles("data_sets/cookbook/");  //输入数据
 		List<Message> passed = readDirFiles("data_sets/cookbook/");     //菜谱相关信息训练集
-		List<Message> unPassed = readDirFiles("data_sets/unrelated/"); //不相关信息训练集
+		List<Message> unPassed = readDirFiles("data_sets/unrelated_cook/"); //不相关信息训练集
 
 		List<String> properties = ReadByLine.readByLine("KnnProperties.txt","utf-8");
 		KnnModel knnModel = new KnnModel(passed, unPassed, properties);
@@ -42,11 +42,25 @@ public class KnnMain {
 		int falseCount = 0;
 		for (Message msg : inputMsgs) {
 			boolean result = knnModel.judge(msg.getContent());
-			System.out.println(result + " " + msg.getContent());
-			if (!result)
+			if (!result){
 				falseCount++;
+//				System.out.println(result + " " + msg.getContent());
+			}
 		}
-		System.out.println("Input " + inputMsgs.size() + " messages and the wrong judgement count is :" + falseCount);  //误判总数
+		System.out.println("Input " + inputMsgs.size() + " messages 漏判数为 :" + falseCount);  //漏判总数
+		
+		inputMsgs = readDirFiles("data_sets/unrelated_cook/");
+		knnModel = new KnnModel(passed, unPassed, properties);
+		knnModel.DEBUG = false;
+		falseCount = 0;
+		for (Message msg : inputMsgs) {
+			boolean result = knnModel.judge(msg.getContent());
+			if (result){
+				falseCount++;
+//				System.out.println(result + " " + msg.getContent());
+			}
+		}
+		System.out.println("Input " + inputMsgs.size() + " messages 误判数为 :" + falseCount);  //误判总数
 	}
 
 }
